@@ -1,2 +1,3 @@
 # editlib
-simple editing library for bootstrap os provisioning
+
+Simple editing library for bootstrap OS provisioning.
