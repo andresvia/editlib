@@ -26,7 +26,7 @@ hello world
 				Convey("The text is appended", func() {
 					edited_text, edited := Edit(initial_text, start_text, termination_text, to_insert)
 					So(edited_text, ShouldEqual, final_text)
-					So(edited, ShouldBeFalse)
+					So(edited, ShouldBeTrue)
 				})
 
 			})
@@ -41,32 +41,61 @@ replace me
 				Convey("The text is edited in place", func() {
 					edited_text, edited := Edit(existing_text, start_text, termination_text, to_insert)
 					So(edited_text, ShouldEqual, final_text)
+					So(edited, ShouldBeTrue)
+				})
+
+			})
+
+			Convey("With an already edited text", func() {
+
+				Convey("Text is not changed", func() {
+					edited := true
+					edited_text, edited := Edit(final_text, start_text, termination_text, to_insert)
+					So(edited_text, ShouldEqual, final_text)
 					So(edited, ShouldBeFalse)
 				})
 
 			})
 		})
 
-		Convey("With an already edited text", func() {
-
-			Convey("Should do nothing", nil)
-
-		})
-
 	})
 
 	Convey("Given start and termination texts", t, func() {
 
-		Convey("With an existing text", func() {
+		start_text := "# EDITLIB START"
+		termination_text := "# EDITLIB TERMINATE"
 
-			Convey("Should remove start and termination texts and everything in between", nil)
+		Convey("The final result should be the same", func() {
 
-		})
+			final_text := "I want to be edited."
 
-		Convey("With an initial text", func() {
+			Convey("With an existing text", func() {
 
-			Convey("Should do nothing", nil)
+				existing_text := `I want to be edited.
+# EDITLIB START
+delete me
+# EDITLIB TERMINATE`
 
+				Convey("Text is removed", func() {
+					edited_text, edited := Edit(existing_text, start_text, termination_text)
+					So(edited_text, ShouldEqual, final_text)
+					So(edited, ShouldBeTrue)
+				})
+
+			})
+
+			Convey("Or with an initial text", func() {
+
+				initial_text := "I want to be edited."
+
+				Convey("Text is not changed", func() {
+					edited := true
+					edited_text, edited := Edit(initial_text, start_text, termination_text)
+					So(edited_text, ShouldEqual, final_text)
+					So(edited, ShouldBeFalse)
+				})
+
+			})
 		})
 
 	})

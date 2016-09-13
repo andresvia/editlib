@@ -1,3 +1,3 @@
 # editlib
 
-Simple editing library for bootstrap OS provisioning.
+Simple editing library to bootstrap more complex OS provisioning.
